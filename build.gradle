@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+    }
+}
+
+plugins {
+    id 'java'
+//    id 'application'
+}
+
+apply plugin: 'docker'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+version = '1.0'
+group = 'kuvaldis.orientdb'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+task orientdbDocker(type: Docker) {
+    applicationName = 'orientdb'
+    tagVersion = version
+    dockerfile "$project.projectDir/docker/Dockerfile"
+}
+
+dependencies {
+    compile 'com.orientechnologies:orientdb-client:1.7.8'
+    compile 'com.orientechnologies:orientdb-enterprice.7.8'
+    compile 'com.orientechnologies:orientdb-core:1.7.8'
+    compile 'com.orientechnologies:blueprints-core:2.6.0'
+    compile 'com.orientechnologies:orient-commons:1.7.8'
+    compile 'com.orientechnologies:orientdb-graphdb:1.7.8'
+    compile 'com.orientechnologies:orientdb-object:1.7.8'
+//    compile 'com.tinkerpop.blueprints:blueprints-orient-graph:2.4.0'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
